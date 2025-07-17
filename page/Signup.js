@@ -1,3 +1,5 @@
+const { expect } = require("@playwright/test");
+
 class Signup{
     constructor(page){
         this.page = page;
@@ -6,10 +8,13 @@ class Signup{
         this.signupBtn = this.page.locator("[data-qa=signup-button]")
     }
 
-    signUp(){
-        this.name.fill("Test");
-        this.sEmail.fill('Test@test.com');
-        this.signupBtn.click();
+    async signUp(){
+        await this.page.goto('https://automationexercise.com/login');
+        await expect(this.page).toHaveTitle('Automation Exercise - Signup / Login');
+        await this.name.fill("Test");
+        await this.sEmail.fill('Test@test.com');
+        await this.signupBtn.click();
     }
 }
 
+module.exports = Signup;
