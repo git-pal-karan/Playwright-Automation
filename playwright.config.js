@@ -1,58 +1,39 @@
-// @ts-check
+//// @ts-check
 import { defineConfig, devices } from '@playwright/test';
 
+// Environment URLs
+const environmentsBaseURL = {
+  qa: 'https://automationexercise.com',
+  staging: 'https://staging.example.com',
+  prod: 'https://example.com',
+};
+
+// Pick environment from ENV variable, default to 'qa'
+const ENV = process.env.ENV || 'qa';
+const BASE_URL = environmentsBaseURL[ENV];
+
+// Headless or headed mode from HEADLESS variable, default true
+const HEADLESS = process.env.HEADLESS !== 'false';
 
 export default defineConfig({
   testDir: './tests',
   reporter: 'html',
   use: {
-     trace: 'on-first-retry',
-     headless:false,
+    baseURL: BASE_URL,       // environment-specific baseURL
+    trace: 'on-first-retry',
+    headless: HEADLESS,      // controlled by env variable
   },
 
-  /* Configure projects for major browsers */
   projects: [
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
-
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
-
-    /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
-
-    /* Test against branded browsers. */
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-    // },
   ],
-
-  /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://localhost:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
 });
+
+
+
+// to run execute this code
+// npx cross-env ENV=qa HEADLESS=true npx playwright test
 
