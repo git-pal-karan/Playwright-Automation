@@ -4,8 +4,6 @@ import { defineConfig, devices } from '@playwright/test';
 // Environment URLs
 const environmentsBaseURL = {
   qa: 'https://automationexercise.com',
-  staging: 'https://staging.example.com',
-  prod: 'https://example.com',
 };
 
 // Pick environment from ENV variable, default to 'qa'
