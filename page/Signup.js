@@ -9,7 +9,7 @@ class Signup{
     }
 
     async signUp(){
-        await this.page.goto('https://automationexercise.com/login');
+        await this.page.goto('login');
         await expect(this.page).toHaveTitle('Automation Exercise - Signup / Login');
         await this.name.fill("Test");
         await this.sEmail.fill('Test@test.com');
